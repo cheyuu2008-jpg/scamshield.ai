@@ -1,2 +1,14 @@
+[project]
+name = "scamshield-ai"
+version = "1.0.0"
+description = "ScamShield AI - Real-Time Fraud & Social Engineering Interceptor"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn>=0.28.0",
+    "pydantic>=2.6.0"
+]
+
 [tool.vercel]
 entrypoint = "server:app"
