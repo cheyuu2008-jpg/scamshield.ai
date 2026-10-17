@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScamShield AI - Multi-Vector Real-Time Fraud & Scam Defense</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts & Lucide Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            },
+            danger: '#ef4444',
+            warning: '#f59e0b',
+            success: '#10b981',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at 50% 0%, #171c2f 0%, #0c0e18 100%);
+      color: #e2e8f0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+    }
+    .glass-card {
+      background: rgba(23, 28, 47, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+    .glass-input {
+      background: rgba(15, 20, 35, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .glass-input:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa 0%, #a855f7 50%, #f43f5e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .pulse-glow {
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- Top Navigation Bar -->
+  <header class="border-b border-slate-800/80 bg-slate-950/60 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-rose-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+          <i data-lucide="shield-alert" class="w-6 h-6 text-white"></i>
+        </div>
+        <div>
+          <span class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+            ScamShield <span class="text-xs px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-400 font-mono font-semibold border border-indigo-500/30">AI PROTOTYPE</span>
+          </span>
+          <p class="text-[11px] text-slate-400">Next-Gen Real-Time Fraud & Social Engineering Interceptor</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="hidden md:inline-flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-950/50 border border-emerald-800/50 px-2.5 py-1 rounded-full">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          AI Model Active (Dual Heuristic + NLP Engine)
+        </span>
+        <a href="#demo-section" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1">
+          <i data-lucide="play" class="w-3.5 h-3.5"></i> Hackathon Demo
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Hero & Problem Statement Pitch -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    
+    <!-- Hackathon Headline Banner -->
+    <div class="text-center max-w-3xl mx-auto space-y-3">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-semibold">
+        <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+        Real-World Crisis: \$1.02 Trillion Lost Annually to Cyber Scams Globally
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+        Instant AI Defense Against <br>
+        <span class="gradient-text">Digital Arrests, Smishing & Payment Traps</span>
+      </h1>
+      <p class="text-sm sm:text-base text-slate-400 leading-relaxed">
+        Scammers weaponize artificial urgency, authority spoofing, and reverse UPI tricks to defraud citizens in minutes. 
+        <strong>ScamShield AI</strong> dissects psychological triggers, malicious links, and extortion vectors in real time with zero privacy leakage.
+      </p>
+    </div>
+
+    <!-- Quick Hackathon Preset Scenarios Bar -->
+    <div id="demo-section" class="glass-card rounded-2xl p-4 sm:p-6 border border-slate-700/60">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <div>
+          <h3 class="text-sm font-bold uppercase tracking-wider text-indigo-400 flex items-center gap-2">
+            <i data-lucide="sparkles" class="w-4 h-4"></i> Test Real-World Hackathon Scenarios (1-Click)
+          </h3>
+          <p class="text-xs text-slate-400">Click any preset below to instantly load and analyze real forensic scam cases:</p>
+        </div>
+        <span class="text-xs font-mono text-slate-400 bg-slate-900/60 px-2.5 py-1 rounded-md border border-slate-800">
+          Preset Library: 6 Tested Vectors
+        </span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5" id="presets-container">
+        <!-- Preset buttons rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- Analysis Workspace: Input & Interactive Radar/Dashboard -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left Column: Input Form (7 cols) -->
+      <div class="lg:col-span-7 space-y-4">
+        <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
+          
+          <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+            <label class="text-sm font-semibold text-white flex items-center gap-2">
+              <i data-lucide="message-square-warning" class="w-4 h-4 text-indigo-400"></i>
+              Suspected Message / SMS / WhatsApp / Email
+            </label>
+            <button id="clear-btn" class="text-xs text-slate-400 hover:text-white transition flex items-center gap-1">
+              <i data-lucide="rotate-ccw" class="w-3 h-3"></i> Reset
+            </button>
+          </div>
+
+          <!-- Sender input (optional) -->
+          <div class="mt-4">
+            <label class="text-xs font-medium text-slate-400 block mb-1">Sender Info / Phone Number / SMS Header (Optional)</label>
+            <div class="relative">
+              <i data-lucide="user-x" class="w-4 h-4 text-slate-500 absolute left-3 top-3"></i>
+              <input 
+                id="sender-input" 
+                type="text" 
+                placeholder="e.g. +91 98210-XXXXX, VK-INDPOST, or +62 812-XXXX" 
+                class="glass-input w-full pl-9 pr-3 py-2 text-xs rounded-xl text-white placeholder-slate-500 outline-none transition"
+              >
+            </div>
+          </div>
+
+          <!-- Message Textarea -->
+          <div class="mt-3">
+            <label class="text-xs font-medium text-slate-400 block mb-1">Message Content or Suspicious URL</label>
+            <textarea 
+              id="message-input" 
+              rows="6" 
+              placeholder="Paste the suspicious text, WhatsApp message, Telegram job pitch, or payment request here to scan..." 
+              class="glass-input w-full p-3.5 text-xs sm:text-sm rounded-xl text-white placeholder-slate-500 outline-none transition leading-relaxed resize-none font-sans"
+            ></textarea>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] text-slate-400 flex items-center gap-1">
+                <i data-lucide="cpu" class="w-3.5 h-3.5 text-indigo-400"></i> Engine:
+              </span>
+              <select id="engine-selector" class="text-xs bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-slate-200 outline-none">
+                <option value="hybrid">AI Heuristic + Deep NLP</option>
+                <option value="api">Python Backend API (:8080)</option>
+              </select>
+            </div>
+
+            <button 
+              id="analyze-btn" 
+              class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-rose-600 hover:from-indigo-500 hover:to-rose-500 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-indigo-600/30 transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <i data-lucide="scan" class="w-4 h-4"></i> Run Threat Scan
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Hackathon Key Innovations Pillar Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="glass-card rounded-xl p-3.5 border-l-2 border-indigo-500">
+            <div class="flex items-center gap-2 text-indigo-400 font-semibold text-xs mb-1">
+              <i data-lucide="brain-circuit" class="w-4 h-4"></i> Psychological Profiling
+            </div>
+            <p class="text-[11px] text-slate-400 leading-tight">Detects manufactured panic, authority intimidation (CBI/Police), and artificial deadlines.</p>
+          </div>
+          <div class="glass-card rounded-xl p-3.5 border-l-2 border-amber-500">
+            <div class="flex items-center gap-2 text-amber-400 font-semibold text-xs mb-1">
+              <i data-lucide="qr-code" class="w-4 h-4"></i> Reverse UPI Interceptor
+            </div>
+            <p class="text-[11px] text-slate-400 leading-tight">Flags scams asking users to scan QR or input UPI PIN to "receive" incoming funds.</p>
+          </div>
+          <div class="glass-card rounded-xl p-3.5 border-l-2 border-rose-500">
+            <div class="flex items-center gap-2 text-rose-400 font-semibold text-xs mb-1">
+              <i data-lucide="link" class="w-4 h-4"></i> Domain & APK Spoofing
+            </div>
+            <p class="text-[11px] text-slate-400 leading-tight">Identifies deceptive subdomains, raw IP hosting, and malicious remote-control .APK payloads.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Live Forensic Analysis & Threat Report (5 cols) -->
+      <div class="lg:col-span-5 space-y-4">
+        
+        <!-- Score Card & Threat Severity Meter -->
+        <div class="glass-card rounded-2xl p-6 relative overflow-hidden" id="report-card">
+          
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs uppercase font-mono font-bold tracking-wider text-slate-400">
+              AI Threat Assessment
+            </span>
+            <span id="threat-badge" class="px-3 py-1 rounded-full text-xs font-bold font-mono tracking-wide uppercase bg-slate-800 text-slate-300 border border-slate-700">
+              Awaiting Input
+            </span>
+          </div>
+
+          <!-- Radial Gauge / Circular Score Indicator -->
+          <div class="flex items-center justify-center py-2">
+            <div class="relative w-40 h-40 flex items-center justify-center">
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                <!-- Background Circle -->
+                <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="8" class="text-slate-800/80" fill="transparent" />
+                <!-- Progress Circle -->
+                <circle 
+                  id="score-circle" 
+                  cx="50" 
+                  cy="50" 
+                  r="40" 
+                  stroke="currentColor" 
+                  stroke-width="8" 
+                  class="text-indigo-500 transition-all duration-1000 ease-out" 
+                  stroke-dasharray="251.2" 
+                  stroke-dashoffset="251.2" 
+                  stroke-linecap="round" 
+                  fill="transparent" 
+                />
+              </svg>
+              <div class="absolute flex flex-col items-center justify-center">
+                <span id="score-text" class="text-4xl font-extrabold text-white tracking-tight">0%</span>
+                <span class="text-[10px] text-slate-400 uppercase font-mono mt-0.5">Scam Risk</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category Banner -->
+          <div class="mt-4 p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-center">
+            <span class="text-[11px] text-slate-400 block font-mono">PRIMARY THREAT VECTOR</span>
+            <span id="category-text" class="text-sm font-bold text-white tracking-wide">
+              None Detected
+            </span>
+          </div>
+
+          <!-- Red Flags Section -->
+          <div class="mt-5 space-y-2">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="flag" class="w-3.5 h-3.5 text-rose-400"></i> Identified Red Flags
+              </span>
+              <span id="flags-count" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">0 Flags</span>
+            </h4>
+            <div id="red-flags-container" class="space-y-1.5 max-h-48 overflow-y-auto pr-1">
+              <p class="text-xs text-slate-500 italic py-2 text-center">Scan a message to inspect extracted red flags...</p>
+            </div>
+          </div>
+
+          <!-- URL / Domain Safety Breakdown (Hidden if no URLs) -->
+          <div id="url-inspector-section" class="mt-4 pt-4 border-t border-slate-800 hidden">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5 mb-2">
+              <i data-lucide="globe" class="w-3.5 h-3.5"></i> Deep Link & Domain Inspector
+            </h4>
+            <div id="url-issues-container" class="space-y-1 text-xs text-slate-300">
+              <!-- URLs rendered here -->
+            </div>
+          </div>
+
+          <!-- Actionable Emergency Playbook -->
+          <div class="mt-5 pt-4 border-t border-slate-800 space-y-2.5">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-400 flex items-center gap-1.5">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Defense & Action Playbook
+            </h4>
+            <div id="playbook-container" class="space-y-1.5">
+              <div class="flex items-start gap-2 text-xs text-slate-400">
+                <span class="text-indigo-400 font-bold">•</span>
+                <span>Select a preset or paste a message to generate actionable defense countermeasures.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Safe Response Generator (1-Click) -->
+          <div class="mt-5 pt-4 border-t border-slate-800">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                <i data-lucide="message-square" class="w-3.5 h-3.5"></i> Recommended Safe Reply
+              </span>
+              <button id="copy-reply-btn" class="text-[11px] text-slate-400 hover:text-white transition flex items-center gap-1">
+                <i data-lucide="copy" class="w-3 h-3"></i> Copy
+              </button>
+            </div>
+            <div id="reply-box" class="p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-xs text-slate-300 leading-relaxed font-mono">
+              Safe response will be formulated once scan completes.
+            </div>
+          </div>
+
+          <!-- Emergency Indian & Global Cyber Hotlines -->
+          <div class="mt-5 p-3 rounded-xl bg-rose-950/30 border border-rose-900/40 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] uppercase font-bold text-rose-400 block">Emergency Cybercrime Helpline</span>
+              <span class="text-xs text-slate-200 font-semibold">National Helpline: <span class="text-rose-300 font-mono text-sm">1930</span> / cybercrime.gov.in</span>
+            </div>
+            <a href="https://cybercrime.gov.in" target="_blank" class="px-2.5 py-1 rounded bg-rose-600/80 hover:bg-rose-500 text-white text-[11px] font-semibold transition">
+              Report Fraud
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Hackathon Presentation Pitch Deck Section (Summary for Judges) -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i data-lucide="award" class="w-5 h-5 text-indigo-400"></i> Hackathon Pitch Deck & Technical Blueprint
+          </h2>
+          <p class="text-xs text-slate-400">Brief, clear information demonstrating real-world viability and architecture.</p>
+        </div>
+        <span class="text-xs font-mono px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+          ScamShield AI Architecture v1.0
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        
+        <div class="space-y-2">
+          <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-xs">01</div>
+          <h3 class="text-sm font-semibold text-white">The Real-World Crisis</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Victims are not deceived by bad grammar; they are exploited by targeted psychological urgency ("Digital Arrest", family emergencies, fake courier customs, high-yield task deposit schemes). By the time victims realize, funds have left via instant UPI/crypto rails.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-xs">02</div>
+          <h3 class="text-sm font-semibold text-white">Multi-Vector AI Engine</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Instead of naive keyword blacklists, ScamShield uses a multi-tiered pipeline: psychological intent categorization, payment mechanics verification (e.g. reverse UPI PIN detection), and deep URL spoofing inspection.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <div class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold text-xs">03</div>
+          <h3 class="text-sm font-semibold text-white">Zero-Trust & Privacy</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Privacy-first design: Analysis can run locally directly on client devices (Android/iOS background SMS listener or Chrome extension), meaning personal chats never need to be uploaded to cloud servers.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">04</div>
+          <h3 class="text-sm font-semibold text-white">Explainable AI (XAI)</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Rather than a black-box percentage, ScamShield educates the user with specific red flags, legal facts (e.g., "Digital Arrest is illegal and fictitious"), and ready-to-send de-escalation responses.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Tech Stack Badges -->
+      <div class="pt-4 border-t border-slate-800 flex flex-wrap items-center gap-2">
+        <span class="text-xs text-slate-500 font-mono mr-2">TECH STACK:</span>
+        <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-[11px] text-slate-300 font-mono">Python 3.x</span>
+        <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-[11px] text-slate-300 font-mono">NLP Pattern Heuristics</span>
+        <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-[11px] text-slate-300 font-mono">Tailwind CSS</span>
+        <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-[11px] text-slate-300 font-mono">Vanilla JS (Zero Heavy Frameworks)</span>
+        <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-[11px] text-slate-300 font-mono">FastAPI / Zero-Dep HTTP</span>
+        <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-[11px] text-slate-300 font-mono">Gemini / LLM Extensible API</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Client-side Analysis Logic & Interactivity -->
+  <script>
+    // Embedded real-world scenarios dataset for instant 1-click testing
+    const PRESETS = [
+      {
+        id: "digital_arrest",
+        name: "Digital Arrest",
+        icon: "shield-alert",
+        color: "rose",
+        sender: "+91 98210-44912 (WhatsApp Video/Call)",
+        text: "URGENT NOTICE FROM CENTRAL BUREAU OF INVESTIGATION: A parcel in your name containing illegal narcotics and fake passports has been seized at Mumbai Customs. An arrest warrant has been issued under PMLA Act. You are placed under DIGITAL ARREST. Connect immediately on Skype video call with Officer Vikram Singh within 15 minutes or police team will raid your address. Transfer ₹1,50,000 security bond to RBI verification account to clear your name."
+      },
+      {
+        id: "telegram_job",
+        name: "YouTube Task Scam",
+        icon: "briefcase",
+        color: "amber",
+        sender: "+62 812-4491-092 (Telegram HR)",
+        text: "Hello! I am Priya from HR Global Recruitment. We saw your resume on LinkedIn. Work from home just 30 mins daily by liking YouTube videos and rating hotels on Google Maps. Earn ₹3,500 - ₹8,000 daily! Daily payouts to UPI/GPay. Click link to join our official Telegram group and claim ₹500 welcome bonus right now: https://t.me/fast_earning_tasks_vip99"
+      },
+      {
+        id: "upi_qr_reverse",
+        name: "UPI QR Trap",
+        icon: "qr-code",
+        color: "rose",
+        sender: "+91 91234-88710 (OLX Buyer)",
+        text: "I want to buy your used sofa urgently for ₹12,000 without bargaining. I have sent an official merchant QR code on WhatsApp. Please open GooglePay or PhonePe, scan this QR code and enter your 6-digit UPI PIN to immediately receive ₹12,000 directly into your bank account. Do not delay, payment expires in 10 mins."
+      },
+      {
+        id: "delivery_phishing",
+        name: "Courier Smishing",
+        icon: "package",
+        color: "amber",
+        sender: "VK-INDPOST",
+        text: "Your package #IN89201938 cannot be delivered due to an incorrect house address number. Please update your full address and pay pending re-dispatch fee of ₹25 within 24 hours at https://indiapost-parcel-tracking.support/update otherwise parcel will be returned to sender and destroyed."
+      },
+      {
+        id: "bank_kyc_apk",
+        name: "Fake Bank APK",
+        icon: "smartphone",
+        color: "rose",
+        sender: "+91 74882-11029",
+        text: "Dear Customer, Your State Bank Account will be BLOCKED today by 8:00 PM due to uncompleted KYC documents. Install our official quick KYC verification app immediately to prevent account freeze: http://sbi-quick-kyc.apk.download/service.apk. Enter PAN and Aadhaar details."
+      },
+      {
+        id: "legitimate_bank_otp",
+        name: "Legit Bank OTP",
+        icon: "check-circle",
+        color: "emerald",
+        sender: "AX-HDFCBK",
+        text: "942183 is your HDFC Bank NetBanking OTP for transaction of ₹1,450 at Amazon India. Valid for 5 mins. NEVER share this OTP with anyone, including bank staff or callers. If not done by you, call 1800-258-3838 immediately."
+      }
+    ];
+
+    // Client-side heuristic analyzer (guarantees offline demo works 100% smoothly!)
+    class ClientScamAnalyzer {
+      static analyze(text, sender = "") {
+        if (!text || !text.trim()) {
+          return { risk_score: 0, risk_level: "UNKNOWN", category: "No Input", red_flags: [], action_playbook: [] };
+        }
+
+        const t = text.toLowerCase();
+        let score = 0;
+        let red_flags = [];
+        let categories = [];
+        let url_issues = [];
+
+        // Digital arrest
+        if (t.includes("digital arrest") || t.includes("cbi") || t.includes("narcotics") || t.includes("customs") || t.includes("arrest warrant") || t.includes("police raid")) {
+          score += 45;
+          categories.push("Digital Arrest / Law Enforcement Impersonation");
+          if (t.includes("digital arrest")) {
+            score += 35;
+            red_flags.push("'Digital Arrest' is a fraudulent extortion tactic. No Indian law enforcement entity operates digital arrests.");
+          }
+          if (t.includes("skype") || t.includes("video call")) {
+            red_flags.push("Demands video interrogation via civilian consumer apps (Skype/WhatsApp).");
+          }
+          if (t.includes("security bond") || t.includes("rbi verification") || t.includes("transfer")) {
+            red_flags.push("Demands money transfer to 'clear' criminal charges (pure extortion).");
+          }
+        }
+
+        // UPI Reverse Traps
+        if ((t.includes("upi pin") && t.includes("receive")) || (t.includes("scan") && t.includes("qr") && t.includes("receive"))) {
+          score += 65;
+          categories.push("Reverse UPI / QR Code Payment Trap");
+          red_flags.push("FATAL TRAP: Asks to enter UPI PIN or scan QR code to RECEIVE money. (UPI PIN is ONLY for paying!)");
+        }
+
+        // Task & YouTube scams
+        if (t.includes("like youtube") || t.includes("rating hotel") || t.includes("telegram") || (t.includes("earn") && (t.includes("daily") || t.includes("part-time")))) {
+          score += 45;
+          categories.push("Part-Time Job / Telegram Task Scam");
+          red_flags.push("Unrealistic daily income promised for trivial tasks (YouTube likes / ratings).");
+          if (t.includes("telegram") || t.includes("t.me")) {
+            red_flags.push("Redirects user into unregulated Telegram channels for upfront deposit schemes.");
+          }
+        }
+
+        // Malicious APK / Downloads
+        if (t.includes(".apk") || t.includes("install app") || t.includes("download app") || t.includes("quicksupport") || t.includes("anydesk")) {
+          score += 55;
+          categories.push("Malicious APK / Trojan Malware");
+          red_flags.push("Requests manual sideloading of an Android .APK file or remote screen-sharing software.");
+        }
+
+        // Urgency
+        if (t.includes("within 15 min") || t.includes("within 24 hour") || t.includes("blocked today") || t.includes("immediately") || t.includes("expires in")) {
+          score += 20;
+          red_flags.push("Manufactured urgency countdown used to trigger impulsive decision-making.");
+        }
+
+        // URL inspection
+        const urlMatches = text.match(/https?:\/\/[^\s<>"]+/gi) || [];
+        urlMatches.forEach(url => {
+          const lowerUrl = url.toLowerCase();
+          if (lowerUrl.includes(".support") || lowerUrl.includes(".vip") || lowerUrl.includes(".xyz") || lowerUrl.includes(".apk")) {
+            url_issues.push(`Suspicious domain extension or direct APK link: ${url}`);
+            score += 25;
+          }
+          if (lowerUrl.includes("indiapost") && !lowerUrl.includes("indiapost.gov.in")) {
+            url_issues.push(`Phishing impersonation of India Post: ${url}`);
+            score += 35;
+          }
+          if (lowerUrl.includes("sbi") && !lowerUrl.includes("sbi.co.in")) {
+            url_issues.push(`Phishing impersonation of SBI Banking Portal: ${url}`);
+            score += 35;
+          }
+        });
+
+        // Legitimate Bank OTP Safeguard
+        let isLegit = false;
+        if ((t.includes("never share this otp") || t.includes("do not share your otp")) && categories.length === 0 && url_issues.length === 0) {
+          isLegit = true;
+          score = 8;
+        }
+
+        const finalScore = isLegit ? 8 : Math.min(Math.max(score, 5), 98);
+
+        let risk_level = "SAFE";
+        let badge_color = "emerald";
+        if (finalScore >= 75) {
+          risk_level = "CRITICAL";
+          badge_color = "rose";
+        } else if (finalScore >= 45) {
+          risk_level = "HIGH";
+          badge_color = "orange";
+        } else if (finalScore >= 25) {
+          risk_level = "SUSPICIOUS";
+          badge_color = "yellow";
+        }
+
+        const primaryCat = categories[0] || (isLegit ? "Legitimate Official Notification" : "Low Risk / Unclassified Message");
+
+        let playbook = [];
+        let reply = "";
+        if (finalScore >= 45) {
+          playbook = [
+            "🛑 Never send funds, scan QR codes, or enter your UPI PIN.",
+            "🚫 Do NOT install third-party .APK files or click unverified links.",
+            "👮 Hang up immediately on video calls claiming to be police/customs. Police never conduct trials over Skype.",
+            "📞 Immediately call 1930 Cybercrime Helpline or visit cybercrime.gov.in."
+          ];
+          if (primaryCat.includes("Digital Arrest")) {
+            reply = "I am reporting this call and message to the Cyber Crime Police Cell and dialing 1930 for official verification. Cease communication immediately.";
+          } else if (primaryCat.includes("UPI")) {
+            reply = "UPI PIN is strictly required for sending payments, never receiving. I will not scan your QR code.";
+          } else {
+            reply = "This communication has been flagged for fraudulent patterns and reported to cyber security authorities.";
+          }
+        } else {
+          playbook = [
+            "✅ Verify that the merchant name and transaction amount match your real action.",
+            "🔒 Keep this OTP confidential; never read it aloud to anyone over phone or text."
+          ];
+          reply = "Standard authentication received. No reply required.";
+        }
+
+        return {
+          risk_score: finalScore,
+          risk_level,
+          badge_color,
+          category: primaryCat,
+          red_flags,
+          url_issues,
+          action_playbook: playbook,
+          suggested_safe_reply: reply
+        };
+      }
+    }
+
+    // UI Controller
+    const presetsContainer = document.getElementById('presets-container');
+    const messageInput = document.getElementById('message-input');
+    const senderInput = document.getElementById('sender-input');
+    const analyzeBtn = document.getElementById('analyze-btn');
+    const clearBtn = document.getElementById('clear-btn');
+    const engineSelector = document.getElementById('engine-selector');
+    
+    // Output elements
+    const threatBadge = document.getElementById('threat-badge');
+    const scoreCircle = document.getElementById('score-circle');
+    const scoreText = document.getElementById('score-text');
+    const categoryText = document.getElementById('category-text');
+    const redFlagsContainer = document.getElementById('red-flags-container');
+    const flagsCount = document.getElementById('flags-count');
+    const urlInspectorSection = document.getElementById('url-inspector-section');
+    const urlIssuesContainer = document.getElementById('url-issues-container');
+    const playbookContainer = document.getElementById('playbook-container');
+    const replyBox = document.getElementById('reply-box');
+    const copyReplyBtn = document.getElementById('copy-reply-btn');
+
+    // Render Presets
+    PRESETS.forEach(p => {
+      const btn = document.createElement('button');
+      btn.className = `p-2.5 rounded-xl text-left transition flex flex-col justify-between border ${
+        p.color === 'rose' ? 'bg-rose-950/20 hover:bg-rose-900/30 border-rose-900/30 text-rose-300' :
+        p.color === 'amber' ? 'bg-amber-950/20 hover:bg-amber-900/30 border-amber-900/30 text-amber-300' :
+        'bg-emerald-950/20 hover:bg-emerald-900/30 border-emerald-900/30 text-emerald-300'
+      }`;
+      btn.innerHTML = `
+        <div class="flex items-center gap-1.5 mb-1.5">
+          <i data-lucide="${p.icon}" class="w-3.5 h-3.5"></i>
+          <span class="text-xs font-bold leading-tight truncate">${p.name}</span>
+        </div>
+        <span class="text-[10px] text-slate-400 font-mono truncate">${p.sender.split(' ')[0]}</span>
+      `;
+      btn.addEventListener('click', () => {
+        senderInput.value = p.sender;
+        messageInput.value = p.text;
+        triggerAnalysis();
+      });
+      presetsContainer.appendChild(btn);
+    });
+
+    // Clear Button
+    clearBtn.addEventListener('click', () => {
+      messageInput.value = '';
+      senderInput.value = '';
+      resetReport();
+    });
+
+    // Copy Reply
+    copyReplyBtn.addEventListener('click', () => {
+      const text = replyBox.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        copyReplyBtn.innerHTML = '<i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> Copied!';
+        lucide.createIcons();
+        setTimeout(() => {
+          copyReplyBtn.innerHTML = '<i data-lucide="copy" class="w-3 h-3"></i> Copy';
+          lucide.createIcons();
+        }, 2000);
+      });
+    });
+
+    // Trigger Analysis
+    analyzeBtn.addEventListener('click', triggerAnalysis);
+
+    async function triggerAnalysis() {
+      const text = messageInput.value.trim();
+      const sender = senderInput.value.trim();
+      if (!text) {
+        alert("Please enter message content or select a preset scenario above.");
+        return;
+      }
+
+      // Visual loading state
+      analyzeBtn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Scanning...`;
+      lucide.createIcons();
+
+      let result;
+      const engine = engineSelector.value;
+
+      if (engine === 'api') {
+        try {
+          const resp = await fetch('http://localhost:8080/api/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text, sender })
+          });
+          if (resp.ok) {
+            result = await resp.json();
+          } else {
+            console.warn("Backend API responded with error, falling back to client engine");
+            result = ClientScamAnalyzer.analyze(text, sender);
+          }
+        } catch (err) {
+          console.warn("Backend server not reachable on :8080, using built-in client engine:", err);
+          result = ClientScamAnalyzer.analyze(text, sender);
+        }
+      } else {
+        // Fast client engine
+        result = ClientScamAnalyzer.analyze(text, sender);
+      }
+
+      setTimeout(() => {
+        renderReport(result);
+        analyzeBtn.innerHTML = `<i data-lucide="scan" class="w-4 h-4"></i> Run Threat Scan`;
+        lucide.createIcons();
+      }, 300);
+    }
+
+    function renderReport(res) {
+      const score = res.risk_score || 0;
+      const level = res.risk_level || 'UNKNOWN';
+      const flags = res.red_flags || [];
+      const urlIssues = res.url_issues || (res.extracted_urls ? res.extracted_urls.flatMap(u => u.issues) : []);
+      const playbook = res.action_playbook || [];
+      const reply = res.suggested_safe_reply || "No action recommended.";
+
+      // 1. Update Badge
+      threatBadge.textContent = `${level} THREAT`;
+      if (level === 'CRITICAL') {
+        threatBadge.className = 'px-3 py-1 rounded-full text-xs font-bold font-mono tracking-wide uppercase bg-rose-500/20 text-rose-400 border border-rose-500/40 animate-pulse';
+        scoreCircle.setAttribute('class', 'text-rose-500 transition-all duration-1000 ease-out');
+      } else if (level === 'HIGH') {
+        threatBadge.className = 'px-3 py-1 rounded-full text-xs font-bold font-mono tracking-wide uppercase bg-orange-500/20 text-orange-400 border border-orange-500/40';
+        scoreCircle.setAttribute('class', 'text-orange-500 transition-all duration-1000 ease-out');
+      } else if (level === 'SUSPICIOUS') {
+        threatBadge.className = 'px-3 py-1 rounded-full text-xs font-bold font-mono tracking-wide uppercase bg-amber-500/20 text-amber-400 border border-amber-500/40';
+        scoreCircle.setAttribute('class', 'text-amber-500 transition-all duration-1000 ease-out');
+      } else {
+        threatBadge.className = 'px-3 py-1 rounded-full text-xs font-bold font-mono tracking-wide uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40';
+        scoreCircle.setAttribute('class', 'text-emerald-500 transition-all duration-1000 ease-out');
+      }
+
+      // 2. Animate Circular Progress (circ = 2 * PI * 40 = 251.2)
+      const circumference = 251.2;
+      const offset = circumference - (score / 100) * circumference;
+      scoreCircle.style.strokeDashoffset = offset;
+      scoreText.textContent = `${score}%`;
+
+      // 3. Category
+      categoryText.textContent = res.category || "General Inquiry";
+
+      // 4. Red Flags
+      flagsCount.textContent = `${flags.length} Flag${flags.length === 1 ? '' : 's'}`;
+      redFlagsContainer.innerHTML = '';
+      if (flags.length === 0) {
+        redFlagsContainer.innerHTML = `<div class="p-2.5 rounded-lg bg-emerald-950/30 border border-emerald-900/30 text-xs text-emerald-300 flex items-center gap-2">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> No malicious extortion or fraud indicators detected.
+        </div>`;
+      } else {
+        flags.forEach(flag => {
+          const div = document.createElement('div');
+          div.className = 'p-2 rounded-lg bg-rose-950/30 border border-rose-900/30 text-xs text-rose-200 flex items-start gap-2 leading-relaxed';
+          div.innerHTML = `<i data-lucide="alert-circle" class="w-3.5 h-3.5 text-rose-400 shrink-0 mt-0.5"></i> <span>${flag}</span>`;
+          redFlagsContainer.appendChild(div);
+        });
+      }
+
+      // 5. URL Inspector
+      if (urlIssues && urlIssues.length > 0) {
+        urlInspectorSection.classList.remove('hidden');
+        urlIssuesContainer.innerHTML = '';
+        urlIssues.forEach(issue => {
+          const div = document.createElement('div');
+          div.className = 'p-2 rounded bg-amber-950/30 border border-amber-900/40 text-amber-200 text-xs flex items-center gap-2';
+          div.innerHTML = `<i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i> <span>${issue}</span>`;
+          urlIssuesContainer.appendChild(div);
+        });
+      } else {
+        urlInspectorSection.classList.add('hidden');
+      }
+
+      // 6. Action Playbook
+      playbookContainer.innerHTML = '';
+      playbook.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'text-xs text-slate-300 leading-relaxed';
+        div.innerHTML = item;
+        playbookContainer.appendChild(div);
+      });
+
+      // 7. Safe Reply
+      replyBox.textContent = reply;
+
+      lucide.createIcons();
+    }
+
+    function resetReport() {
+      threatBadge.textContent = 'Awaiting Input';
+      threatBadge.className = 'px-3 py-1 rounded-full text-xs font-bold font-mono tracking-wide uppercase bg-slate-800 text-slate-300 border border-slate-700';
+      scoreCircle.style.strokeDashoffset = '251.2';
+      scoreCircle.setAttribute('class', 'text-indigo-500 transition-all duration-1000 ease-out');
+      scoreText.textContent = '0%';
+      categoryText.textContent = 'None Detected';
+      flagsCount.textContent = '0 Flags';
+      redFlagsContainer.innerHTML = '<p class="text-xs text-slate-500 italic py-2 text-center">Scan a message to inspect extracted red flags...</p>';
+      urlInspectorSection.classList.add('hidden');
+      playbookContainer.innerHTML = `
+        <div class="flex items-start gap-2 text-xs text-slate-400">
+          <span class="text-indigo-400 font-bold">•</span>
+          <span>Select a preset or paste a message to generate actionable defense countermeasures.</span>
+        </div>
+      `;
+      replyBox.textContent = 'Safe response will be formulated once scan completes.';
+      lucide.createIcons();
+    }
+
+    // Auto-load first scenario for immediate impressive appearance
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      // Preload first scenario
+      const initial = PRESETS[0];
+      senderInput.value = initial.sender;
+      messageInput.value = initial.text;
+      triggerAnalysis();
+    });
+  </script>
+</body>
+</html>

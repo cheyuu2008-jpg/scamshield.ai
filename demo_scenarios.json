@@ -1,0 +1,93 @@
+{
+  "scenarios": [
+    {
+      "id": "digital_arrest",
+      "category": "Digital Arrest / Authority Spoofing",
+      "title": "CBI / Police Digital Arrest Threat",
+      "risk_level": "CRITICAL",
+      "risk_score": 96,
+      "sender": "+91 98210-XXXXX (WhatsApp Call/Message)",
+      "text": "URGENT NOTICE FROM CENTRAL BUREAU OF INVESTIGATION: A parcel in your name containing illegal narcotics and fake passports has been seized at Mumbai Customs. An arrest warrant has been issued under PMLA Act. You are placed under DIGITAL ARREST. Connect immediately on Skype video call with Officer Vikram Singh within 15 minutes or police team will raid your address. Transfer ₹1,50,000 security bond to RBI verification account to clear your name.",
+      "red_flags": [
+        "Digital Arrest does not legally exist in Indian or international law",
+        "Extreme urgency window ('within 15 minutes')",
+        "Demand for monetary transfer to avoid arrest/raid",
+        "Video call demand via civilian platform (Skype/WhatsApp)"
+      ],
+      "victim_psychology": "Fear, Panic, Authority intimidation"
+    },
+    {
+      "id": "telegram_job",
+      "category": "Part-Time Job / Task Scam",
+      "title": "YouTube Like & Review Daily Earning",
+      "risk_level": "HIGH",
+      "risk_score": 91,
+      "sender": "+62 812-449-XXXX (Telegram / WhatsApp)",
+      "text": "Hello! I am Priya from HR Global Recruitment. We saw your resume on LinkedIn. Work from home just 30 mins daily by liking YouTube videos and rating hotels on Google Maps. Earn ₹3,500 - ₹8,000 daily! Daily payouts to UPI/GPay. Click link to join our official Telegram group and claim ₹500 welcome bonus right now: https://t.me/fast_earning_tasks_vip99",
+      "red_flags": [
+        "Unsolicited job offer with unrealistic hourly compensation",
+        "Redirection to unregulated Telegram channels",
+        "'Welcome bonus' designed to create psychological commitment",
+        "Pyramid task deposit scheme indicator"
+      ],
+      "victim_psychology": "Greed, Easy money, Financial vulnerability"
+    },
+    {
+      "id": "upi_qr_reverse",
+      "category": "Payment / Marketplace Fraud",
+      "title": "OLX / Marketplace 'Scan to Receive' Scam",
+      "risk_level": "CRITICAL",
+      "risk_score": 94,
+      "sender": "+91 91234-XXXXX (Buyer on OLX)",
+      "text": "I want to buy your used sofa urgently for ₹12,000 without bargaining. I have sent an official merchant QR code on WhatsApp. Please open GooglePay or PhonePe, scan this QR code and enter your 6-digit UPI PIN to immediately receive ₹12,000 directly into your bank account. Do not delay, payment expires in 10 mins.",
+      "red_flags": [
+        "You NEVER need to enter your UPI PIN to RECEIVE money",
+        "Scanning a QR code always DEDUCTS money from your account",
+        "Buyer refuses to inspect item in person",
+        "Manufactured time pressure ('payment expires in 10 mins')"
+      ],
+      "victim_psychology": "Urgency, Confusion about UPI payment protocol"
+    },
+    {
+      "id": "delivery_phishing",
+      "category": "Smishing / Package Delivery Phishing",
+      "title": "India Post / FedEx Unpaid Customs Fee",
+      "risk_level": "HIGH",
+      "risk_score": 88,
+      "sender": "VK-INDPOST (Spoofed SMS Header)",
+      "text": "Your package #IN89201938 cannot be delivered due to an incorrect house address number. Please update your full address and pay pending re-dispatch fee of ₹25 within 24 hours at https://indiapost-parcel-tracking.support/update otherwise parcel will be returned to sender and destroyed.",
+      "red_flags": [
+        "Unofficial fake domain ('indiapost-parcel-tracking.support' vs official indiapost.gov.in)",
+        "Micro-payment trap (₹25 fee used to steal debit/credit card CVV and OTP)",
+        "Artificial delivery deadline urgency"
+      ],
+      "victim_psychology": "Curiosity, Fear of losing package, Low fee illusion"
+    },
+    {
+      "id": "bank_kyc_apk",
+      "category": "Malware / Malicious APK Download",
+      "title": "SBI / HDFC Electricity / Bank KYC Suspension",
+      "risk_level": "CRITICAL",
+      "risk_score": 98,
+      "sender": "+91 74882-XXXXX (SMS)",
+      "text": "Dear Customer, Your State Bank Account will be BLOCKED today by 8:00 PM due to uncompleted KYC documents. Install our official quick KYC verification app immediately to prevent account freeze: http://sbi-quick-kyc.apk.download/service.apk. Enter PAN and Aadhaar details.",
+      "red_flags": [
+        "Direct link to download an untrusted Android .APK file (remote RAT / SMS forwarder)",
+        "Banks never distribute APKs through third-party links or SMS",
+        "Immediate same-day deadline threat"
+      ],
+      "victim_psychology": "Fear of financial lock-out, Compliance urge"
+    },
+    {
+      "id": "legitimate_bank_otp",
+      "category": "Legitimate Notification (Safe)",
+      "title": "Legitimate Bank Transaction OTP Alert",
+      "risk_level": "SAFE",
+      "risk_score": 8,
+      "sender": "AX-HDFCBK (Official Bank Sender ID)",
+      "text": "942183 is your HDFC Bank NetBanking OTP for transaction of ₹1,450 at Amazon India. Valid for 5 mins. NEVER share this OTP with anyone, including bank staff or callers. If not done by you, call 1800-258-3838 immediately.",
+      "red_flags": [],
+      "victim_psychology": "Normal transaction authentication with clear warning NOT to share OTP"
+    }
+  ]
+}

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScamShield AI - Intelligent Scam & Fraud Defense Engine</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header>
+    <div class="logo-container">
+      <div class="shield-icon">🛡️</div>
+      <div class="logo-text">
+        <h1>Scam Shield</h1>
+        <p>Know before you trust.</p>
+      </div>
+    </div>
+    <div class="header-badges">
+      <div class="badge-live">
+        <span class="pulse-dot"></span>
+        AI Detector Active
+      </div>
+      <button id="btn-open-quiz" class="btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;">
+        🎓 Scam Quiz
+      </button>
+      <button id="btn-open-emergency" class="btn-secondary" style="padding: 6px 12px; font-size: 0.8rem; border-color: #ef4444; color: #fca5a5;">
+        🚨 Emergency Playbook
+      </button>
+    </div>
+  </header>
+
+  <!-- Live Threat Ticker -->
+  <div class="ticker-banner">
+    <span class="ticker-label">ACTIVE RADAR</span>
+    <div class="ticker-text">
+      ⚠️ High Surge: Highway toll fee SMS scams (.top / .xyz) • Fake Geek Squad invoice renewals ($499) • AI voice clone grandparent extortion • Crypto doubling giveaway impersonations • Fake Chase Bank security alerts
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="container">
+    <div class="grid-main">
+      
+      <!-- Primary Analysis Area -->
+      <section class="main-column">
+        
+        <!-- Scanner Input Card -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>🔍</span> Multi-Modal Threat Inspection
+            </div>
+            <span style="font-size: 0.78rem; color: var(--text-dim);">Heuristic AI + Natural Language Forensic Engine</span>
+          </div>
+
+          <!-- Modality Tabs -->
+          <div class="tabs-container">
+            <button class="tab-btn active" data-modality="text">📱 SMS & Smishing</button>
+            <button class="tab-btn" data-modality="url">🌐 Phishing URL</button>
+            <button class="tab-btn" data-modality="email">📧 Email & Invoice</button>
+            <button class="tab-btn" data-modality="call">📞 Call Transcript</button>
+          </div>
+
+          <!-- Quick Load Sample Chips -->
+          <div class="sample-bar">
+            <div class="sample-bar-label">⚡ 1-Click Test Scenarios:</div>
+            <div id="sample-chips" class="sample-chips">
+              <!-- Dynamically populated chips -->
+            </div>
+          </div>
+
+          <!-- Input Box -->
+          <div class="input-wrapper">
+            <textarea 
+              id="scanner-input" 
+              class="scanner-input" 
+              placeholder="Paste suspicious text message, WhatsApp text, email, link, or call transcript here..."
+            ></textarea>
+            <div class="input-footer">
+              <span id="char-count">0 characters</span>
+              <span>🔒 100% Private Client-Side Pre-Screening</span>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="action-row">
+            <button id="btn-scan" class="btn-primary">
+              <span>⚡ Deep Scan with ScamShield AI</span>
+            </button>
+            <button id="btn-clear" class="btn-secondary">Clear</button>
+          </div>
+        </div>
+
+        <!-- Scan Results Container -->
+        <div id="results-container" class="results-container">
+          
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <span>📊</span> AI Threat Evaluation Report
+              </div>
+              <button id="btn-report-scam" class="btn-secondary" style="padding: 5px 12px; font-size: 0.78rem; border-color: #f59e0b; color: #fbbf24;">
+                📢 Report to ScamShield Database
+              </button>
+            </div>
+
+            <!-- Threat Score & Gauge Overview -->
+            <div class="threat-overview-grid">
+              
+              <!-- Radial SVG Gauge -->
+              <div class="gauge-box">
+                <div style="position: relative; display: flex; align-items: center; justify-content: center;">
+                  <svg class="gauge-svg" viewBox="0 0 140 140">
+                    <circle class="gauge-bg" cx="70" cy="70" r="60"></circle>
+                    <circle id="gauge-circle" class="gauge-progress" cx="70" cy="70" r="60"></circle>
+                  </svg>
+                  <span id="score-number" class="gauge-score">0</span>
+                </div>
+                <div class="gauge-caption">Fraud Risk Score</div>
+              </div>
+
+              <!-- Threat Meta Info -->
+              <div class="threat-meta">
+                <div id="risk-level-badge" class="risk-badge">
+                  ANALYZING
+                </div>
+                <div id="category-display" class="category-tag">
+                  Categorizing Threat...
+                </div>
+                <div id="confidence-meter" style="font-size: 0.85rem; color: var(--text-muted);">
+                  AI Confidence: 95%
+                </div>
+                <div id="brand-alert-box" class="impersonation-alert" style="display: none;">
+                  <!-- Brand Impersonation Alert -->
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Highlighted Forensic Text View -->
+            <div class="scan-highlights-card">
+              <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase; margin-bottom: 8px;">
+                🔎 Text Forensic Breakdown (Red Flags Highlighted):
+              </div>
+              <div id="highlighted-text-box" class="highlighted-body">
+                <!-- Highlighted text -->
+              </div>
+            </div>
+
+            <!-- Identified Manipulative Tactics -->
+            <div style="margin-bottom: 12px; font-size: 0.95rem; font-weight: 700; color: #fff;">
+              ⚠️ Deceptive Tactics Identified:
+            </div>
+            <div id="tactics-list" class="tactics-grid">
+              <!-- Cards for each tactic -->
+            </div>
+
+            <!-- URL Forensic Deep Dive (If URLs detected) -->
+            <div id="url-analysis-wrapper" style="display: none; margin-bottom: 20px;">
+              <div style="margin-bottom: 10px; font-size: 0.95rem; font-weight: 700; color: #fff;">
+                🌐 Domain & URL Forensic Check:
+              </div>
+              <div id="url-analysis-list" style="display: flex; flex-direction: column; gap: 10px;">
+                <!-- URL cards -->
+              </div>
+            </div>
+
+            <!-- Actionable Recommendations & Defense Checklist -->
+            <div class="rec-card">
+              <div class="rec-title">
+                <span>🛡️</span> ScamShield Recommended Action Plan
+              </div>
+              <ul id="recommendations-list" class="rec-list">
+                <!-- Action items -->
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Sidebar -->
+      <aside class="sidebar-column">
+        
+        <!-- Live Threat Feed -->
+        <div class="sidebar-widget">
+          <div class="widget-title">
+            <span>📡</span> Live Scam Radar Feed
+          </div>
+          <div id="threat-radar-list">
+            <!-- Threat items -->
+          </div>
+        </div>
+
+        <!-- Telemetry Stats -->
+        <div class="sidebar-widget">
+          <div class="widget-title">
+            <span>⚡</span> Engine Telemetry
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.85rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Inspection Latency:</span>
+              <strong style="color: #34d399;">~14 ms</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Detection Precision:</span>
+              <strong style="color: #38bdf8;">98.4%</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Known Phishing TLDs:</span>
+              <strong style="color: #fca5a5;">20+ monitored</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Engine Modes:</span>
+              <strong style="color: #c084fc;">4 Modalities</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security Tip Card -->
+        <div class="sidebar-widget" style="background: linear-gradient(145deg, #101c36, #0e274a); border-color: #2563eb;">
+          <div class="widget-title" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">
+            <span>💡</span> Golden Defense Rule
+          </div>
+          <p style="font-size: 0.82rem; color: #cbd5e1; line-height: 1.5;">
+            "Whenever an unexpected notification demands urgent action, <strong>never</strong> use the links or numbers in the alert. Open your official app or search the verified company portal directly."
+          </p>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Awareness Quiz Modal -->
+  <div id="modal-quiz" class="modal-overlay">
+    <div class="modal-content">
+      <button class="close-btn">&times;</button>
+      <div style="font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 6px;">
+        🎓 Scam Defense Training & Quiz
+      </div>
+      <div id="quiz-counter" style="font-size: 0.8rem; color: var(--accent-cyan); margin-bottom: 16px; font-weight: 600;">
+        Question 1 of 3
+      </div>
+      
+      <p id="quiz-scenario" style="font-size: 0.95rem; margin-bottom: 18px; color: #e2e8f0; line-height: 1.6;">
+        <!-- Scenario text -->
+      </p>
+
+      <div id="quiz-options">
+        <!-- Option buttons -->
+      </div>
+
+      <div id="quiz-feedback" style="display: none; padding: 12px; border-radius: 8px; background: #0b1528; border: 1px solid var(--border-color); font-size: 0.85rem; margin-top: 14px;">
+        <!-- Explanation -->
+      </div>
+
+      <div style="margin-top: 18px; display: flex; justify-content: flex-end;">
+        <button id="btn-next-quiz" class="btn-primary" style="padding: 9px 18px; font-size: 0.85rem;">Next Scenario &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Emergency Response Guide Modal -->
+  <div id="modal-emergency" class="modal-overlay">
+    <div class="modal-content">
+      <button class="close-btn">&times;</button>
+      <div style="font-size: 1.25rem; font-weight: 700; color: #fca5a5; margin-bottom: 6px;">
+        🚨 Emergency Compromise Response Playbook
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
+        Follow these critical steps immediately if you clicked a malicious link, provided OTPs, or sent funds.
+      </p>
+
+      <div class="emergency-step">
+        <div class="step-num">1</div>
+        <div class="step-info">
+          <h4 style="color: #ef4444;">Freeze Bank & Card Accounts</h4>
+          <p>Immediately call your bank's official number (found on the back of your physical card). Request an urgent security block on unauthorized transfers.</p>
+        </div>
+      </div>
+
+      <div class="emergency-step">
+        <div class="step-num">2</div>
+        <div class="step-info">
+          <h4 style="color: #f59e0b;">Reset All Compromised Passwords</h4>
+          <p>From an uncompromised device, update your email, banking, and social credentials. Enable hardware or App-based 2FA (Authenticator app instead of SMS).</p>
+        </div>
+      </div>
+
+      <div class="emergency-step">
+        <div class="step-num">3</div>
+        <div class="step-info">
+          <h4 style="color: #38bdf8;">Revoke Remote Access Tools</h4>
+          <p>If instructed to install AnyDesk, TeamViewer, or QuickAssist: disconnect Wi-Fi immediately, reboot into Safe Mode, and uninstall the tools.</p>
+        </div>
+      </div>
+
+      <div class="emergency-step">
+        <div class="step-num">4</div>
+        <div class="step-info">
+          <h4 style="color: #34d399;">File Official Fraud Reports</h4>
+          <p>Report the incident to the FTC (reportfraud.ftc.gov) or local cyber crime division (e.g., cybercrime.gov.in / IC3.gov) to establish a paper trail for disputed charges.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; text-align: right;">
+        <button class="btn-secondary close-btn-action" onclick="document.getElementById('modal-emergency').style.display='none'">
+          Close Playbook
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
